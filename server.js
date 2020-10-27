@@ -34,7 +34,7 @@ app.get('/', (req, res, next) => {
     })
 });
 
-app.get('/data', dataRoutes);
+app.use('/data', dataRoutes);
 
 app.listen(process.env.PORT || 3000, ()=>{
     console.log('Server started...')
