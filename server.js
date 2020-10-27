@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 // Routes to be used
-const dataRoutes = require('./routes/data');
+const userRoutes = require('./routes/user');
 
 // Connect to database
 mongoose.connect(
@@ -30,11 +30,11 @@ app.use(express.json());
 // use routes
 app.get('/', (req, res, next) => {
     res.status(201).json({
-        message: "we here boi"
+        message: "Welcome to TMS API v 0.0.1"
     })
 });
 
-app.use('/data', dataRoutes);
+app.use('/user', userRoutes);
 
 app.listen(process.env.PORT || 3000, ()=>{
     console.log('Server started...')
