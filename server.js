@@ -6,6 +6,7 @@ require('dotenv').config();
 const app = express();
 
 // Routes to be used
+const dataRoutes = require('./routes/data');
 
 // Connect to database
 mongoose.connect(
