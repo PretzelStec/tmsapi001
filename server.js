@@ -19,7 +19,7 @@ mongoose.connect(
         if(err){
             console.log(err);
         }else{
-            console.log('Connected to database = ' + process.env.ATLAS_URL + "...");
+            console.log('Connected to database...');
         }
     }
 )

@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 require('mongoose-type-email')
 
+/*
+
+{
+    "username":"",
+    "phone":"",
+    "email":"",
+    "password":""
+}
+
+*/
+
 const User = mongoose.Schema({
     _id : mongoose.Schema.Types.ObjectId,
     username: {
@@ -16,12 +27,15 @@ const User = mongoose.Schema({
         required: true
     },
     companyID: {
-        type: Number,
+        type: String,
         required: true
     },
     role: {
         type: String,
         required: true
+    },
+    phone:{
+        type: String
     }
 });
 
