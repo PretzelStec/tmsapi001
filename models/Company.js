@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 require('mongoose-type-email')
 
+const UserSchema = require('../schemas/User');
+
 /* 
 
 {
@@ -48,7 +50,11 @@ const Company = new mongoose.Schema({
     officePhone: {
         type: String,
         required: true
-    }
+    },
+    dispatchers: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
+    drivers: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
+    admins: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
+    accountants: [{type: mongoose.Schema.ObjectId, ref: 'user'}]
 })
 
 module.exports = mongoose.model('company', Company);
