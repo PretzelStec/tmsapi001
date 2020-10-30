@@ -55,6 +55,8 @@ async function getUsersOfRole(list, res){
             }else{
                 // the id is valid push the email and phone
                 dispatchers.push({
+                    fname: user.fname,
+                    lname: user.lname,
                     email: user.email,
                     phone: user.phone
                 });
@@ -82,11 +84,12 @@ router.get('/users', authenticateToken, async (req, res, next)=>{
 /*
 
 {
-    "username":"",
+    "fname":"",
+    "lname":"",
     "phone":"",
     "email":"",
     "password":""
-    "role": <["admins", "drivers", "accountants", "dispatchers"]>
+    "role": <"admins", "drivers", "accountants", "dispatchers">
 }
 
 */
@@ -121,7 +124,8 @@ router.post('/register',authenticateToken, (req, res, next)=>{
                             // we hashed the password. now we can create a new user model
                             const newUser = new User({
                                 _id: mongoose.Types.ObjectId(),
-                                username: req.body.username,
+                                fname: req.body.fname,
+                                lname: req.body.lname,
                                 email: req.body.email,
                                 // set the password to the hashed password
                                 password: hash,

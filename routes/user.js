@@ -75,7 +75,8 @@ router.get('/login', (req, res, next)=>{
 /* 
 
 "user": {
-    "username":"",
+    "fname":"",
+    "lname":"",
     "phone":"",
     "email":"",
     "password":""
@@ -85,7 +86,7 @@ router.get('/login', (req, res, next)=>{
     "name":"",
     "state":"",
     "city":"",
-    street:"",
+    "street":"",
     "street2":"",
     "zipCode":"",
     "officePhone":"" 
@@ -128,7 +129,8 @@ router.post('/register', async (req, res, next)=>{
             // create new user
             const newUser = new User({
                 _id: mongoose.Types.ObjectId(),
-                username: req.body.user.username,
+                fname: req.body.user.fname,
+                lname: req.body.user.lname,
                 email: req.body.user.email,
                 password: hash,
                 companyID: req.body.company.MC,

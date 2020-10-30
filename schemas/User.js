@@ -4,7 +4,8 @@ require('mongoose-type-email')
 /*
 
 {
-    "username":"",
+    "fname":"",
+    "lname":"",
     "phone":"",
     "email":"",
     "password":""
@@ -14,7 +15,11 @@ require('mongoose-type-email')
 
 const User = mongoose.Schema({
     _id : mongoose.Schema.Types.ObjectId,
-    username: {
+    fname: {
+        type: String,
+        required: true
+    },
+    lname: {
         type: String,
         required: true
     },
