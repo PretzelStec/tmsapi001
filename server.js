@@ -8,6 +8,7 @@ const app = express();
 // Routes to be used
 const userRoutes = require('./routes/user');
 const companyRoutes = require('./routes/company');
+const loadRoutes = require("./routes/load");
 
 // Connect to database
 mongoose.connect(
@@ -37,6 +38,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
+app.use('/load', loadRoutes);
 
 app.listen(process.env.PORT || 3000, ()=>{
     console.log('Server started...')
