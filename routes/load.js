@@ -11,7 +11,8 @@ const router = express.Router();
 
 // get user model
 const Company = require('../models/Company');
-const User = mongoose.model('user', require('../schemas/User'));
+const Pickup = mongoose.model('pickup', require('../schemas/Pickup'));
+const Drop = mongoose.model('drop', require('../schemas/Drop'));
 const Load = require('../models/Load');
 
 router.get('/', authenticateToken, (req, res, next) => {
@@ -26,29 +27,78 @@ router.get('/:id', authenticateToken, (req, res, next) => {
     })
 })
 
-router.post('/add/drop', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "added new drop"
+router.post('/', authenticateToken, (req, res, next) => {
+    const newLoad = new Load({
+        _id : mongoose.Types.ObjectId(),
+        customer: req.body.customer, // required
+        commodity: req.body.commodity, // required
+        weight: req.body.weight, // required
+        rate: req.body.rate, // required
+        //truck: {type: mongoose.Schema.ObjectId, ref: 'truck'}, // required
+        status: req.body.status, // ["upcoming", "current", "previous"]
+        bol: req.body.bol,
+        bolPath: req.body.bolPath,
+        scale: req.body.scale,
+        scalePath: req.body.scalePath,
+        lumper: req.body.lumper,
+        lumberPath: req.body.lumberPath,
+        inventory: req.body.inventory,
+        inventoryPath: req.body.inventoryPath,
+        other1: req.body.other1,
+        other1Path: req.body.other1Path,
+        other2: req.body.other2,
+        other2Path: req.body.other2Path,
+        locationImage: req.body.locationImage,
+        dispatch: req.user.userID, //required... set to user who makes the load
+        driver: req.body.driver, // not required
+        notes: req.body.notes
     })
+
+    //load in pickups
+    for (x of req.body.pickup){
+        newPick = new Pickup({
+            date: x.date,
+            shipper: x.shipper,
+            street: x.street,
+            city: x.city,
+            state: x.state,
+            zip: x.zip,
+            notes: x.notes,
+        })
+        newLoad.pickup.push(newPick);
+    }
+    //load in drops
+    for (x of req.body.drop){
+        newDrop = new Drop({
+            date: x.date,
+            receiver: x.receiver,
+            street: x.street,
+            city: x.city,
+            state: x.state,
+            zip: x.zip,
+            notes: x.notes,
+        });
+        newLoad.drop.push(newDrop);
+    }
+
+    //console.log(newLoad);
+    newLoad
+    .save()
+    .then(load => {
+        res.status(201).json({
+            status: "success",
+            message: "load added successfully"
+        })
+    })
+    .catch(err => {
+        res.status(401).json({
+            status:"failed",
+            error: err
+        })
+    });
+
 })
 
-router.post('/add/pickup', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "added new pickup"
-    })
-})
-
-router.delete('/remove/drop/:id', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "removed drop"
-    })
-})
-
-router.delete('/remove/pickup/:id', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "removed pickup"
-    })
-})
 
 router.post('/add/driver', authenticateToken, (req, res, next) => {
     res.status(200).json({
@@ -59,18 +109,6 @@ router.post('/add/driver', authenticateToken, (req, res, next) => {
 router.delete('/remove/driver', authenticateToken, (req, res, next) => {
     res.status(200).json({
         message : "driver removed"
-    })
-})
-
-router.post('/add/dispatch', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "dispatch added"
-    })
-})
-
-router.delete('/remove/dispatch', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "dispatch removed"
     })
 })
 

@@ -4,7 +4,7 @@
   "description": "alpha api for front end development",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "Jacob Stec",
   "license": "ISC",

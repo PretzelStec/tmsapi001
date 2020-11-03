@@ -6,6 +6,12 @@ const Pickup = require('../schemas/Pickup');
 
 const Load = new mongoose.Schema({
     _id : mongoose.Schema.Types.ObjectId,
+    customer: String, // required
+    commodity: String, // required
+    weight: Number, // required
+    rate: Number, // required
+    //truck: {type: mongoose.Schema.ObjectId, ref: 'truck'}, //
+    status: String, // ["upcoming", "current", "previous"]
     bol: String,
     bolPath: String,
     scale: String,
@@ -19,11 +25,11 @@ const Load = new mongoose.Schema({
     other2: String,
     other2Path: String,
     locationImage: String,
-    //add dispactch
-    //add driver
-    //add load
+    dispatch:{type: mongoose.Schema.ObjectId, ref: 'user'}, //required
+    driver:{type: mongoose.Schema.ObjectId, ref: 'user'}, // not required
     pickup: [Pickup],
-    drop: [Drop]
+    drop: [Drop],
+    notes: String
 })
 
 module.exports = mongoose.model('load', Load)
