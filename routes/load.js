@@ -15,9 +15,20 @@ const Pickup = mongoose.model('pickup', require('../schemas/Pickup'));
 const Drop = mongoose.model('drop', require('../schemas/Drop'));
 const Load = require('../models/Load');
 
-router.get('/', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "return all loads"
+router.get('/', authenticateToken, (req, res, next) => {  
+    Load.find({companyID:req.user.companyID})
+    .exec()
+    .then(loads => {
+        return res.status(200).json({
+            status: "success",
+            loads : loads
+        })
+    })
+    .catch(err => {
+        return res.status(404).json({
+            status: "failed",
+            error:err
+        })
     })
 })
 
@@ -29,6 +40,7 @@ router.get('/:id', authenticateToken, (req, res, next) => {
 
 router.post('/', authenticateToken, (req, res, next) => {
     const newLoad = new Load({
+        companyID: req.user.companyID,
         _id : mongoose.Types.ObjectId(),
         customer: req.body.customer, // required
         commodity: req.body.commodity, // required
@@ -57,6 +69,7 @@ router.post('/', authenticateToken, (req, res, next) => {
     //load in pickups
     for (x of req.body.pickup){
         newPick = new Pickup({
+            order: x.order,
             date: x.date,
             shipper: x.shipper,
             street: x.street,
@@ -70,6 +83,7 @@ router.post('/', authenticateToken, (req, res, next) => {
     //load in drops
     for (x of req.body.drop){
         newDrop = new Drop({
+            order: x.order,
             date: x.date,
             receiver: x.receiver,
             street: x.street,
@@ -100,15 +114,9 @@ router.post('/', authenticateToken, (req, res, next) => {
 })
 
 
-router.post('/add/driver', authenticateToken, (req, res, next) => {
+router.patch('/edit/driver', authenticateToken, (req, res, next) => {
     res.status(200).json({
-        message : "driver added"
-    })
-})
-
-router.delete('/remove/driver', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "driver removed"
+        message : "driver edited"
     })
 })
 

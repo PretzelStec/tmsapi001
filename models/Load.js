@@ -5,6 +5,7 @@ const Drop = require('../schemas/Drop');
 const Pickup = require('../schemas/Pickup');
 
 const Load = new mongoose.Schema({
+    companyID: Number,
     _id : mongoose.Schema.Types.ObjectId,
     customer: String, // required
     commodity: String, // required

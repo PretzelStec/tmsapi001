@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 require('mongoose-type-email')
 
 const Drop = new mongoose.Schema({
+    order: Number,
     date:String,
     receiver: String,
     street: String,
