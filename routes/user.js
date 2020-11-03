@@ -22,7 +22,7 @@ const Company = require('../models/Company');
 
 */
 // login a user and return a jwt token
-router.get('/login', (req, res, next)=>{
+router.post('/login', (req, res, next)=>{
     // find a user with the email
     User.find({email: req.body.email})
     .exec()
