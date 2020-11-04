@@ -52,7 +52,8 @@ const Company = new mongoose.Schema({
         required: true
     },
     dispatchers: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
-    drivers: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
+    company_drivers: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
+    owners_operators: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
     admins: [{type: mongoose.Schema.ObjectId, ref: 'user'}],
     accountants: [{type: mongoose.Schema.ObjectId, ref: 'user'}]
 })

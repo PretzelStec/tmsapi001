@@ -37,43 +37,93 @@ router.get('/', authenticateToken, (req, res, next)=>{
 }
 */
 
-async function getUsersOfRole(list, res){
+async function getUsersOfRole(role, res, req){
     // define a new empty array
-    const dispatchers = []
-    if(list){
-    //for each of the ids in the array
-        for(i=0; i < list.length; i++){
-            //query the user information
-            await User.findById(list[i], (err, user)=>{
-                if(err){
-                    res.status(500).json({
-                        status: "failed",
-                        error:err
+    const users = []
+    // get company data
+
+    await Company.findOne({MC : req.user.companyID})
+    .exec()
+    .then(async company => {
+        if(company){
+            const usersID = company[role];
+            for(x of usersID){
+                await User.findById(x)
+                .exec()
+                .then(user => {
+                    const data = {
+                        _id : user._id,
+                        email : user.email,
+                        fname : user.fname,
+                        lname : user.lname,
+                        phone : user.phone
+                    }
+                    users.push(data)
+                })
+                .catch(err => {
+                    users.push({
+                        error : "error getting user info"   
                     })
-                }else if(!user){
-                    // if the id is no longer associated with an account push this
-                    dispatchers.push({error: "user no longer exists"})
-                }else{
-                    // the id is valid push the email and phone
-                    dispatchers.push({
-                        fname: user.fname,
-                        lname: user.lname,
-                        email: user.email,
-                        phone: user.phone
-                    });
-                }
-            })
+                })
+            }
         }
-    }
+    })
+    .catch(err => {
+        return res.status(200).json({
+            status : "failed",
+            error: err
+        })
+    });
+    
+
     //return the array
-    return dispatchers;
+    return users;
 }
 
 // get the user of a given list from the request
-router.get('/users', authenticateToken, async (req, res, next)=>{
-
+router.get('/admins', authenticateToken, async (req, res, next)=>{
     //call our function defined above to get users data which returns an array
-    const users = await getUsersOfRole(req.body.users, res);
+    const users = await getUsersOfRole('admins', res, req);
+
+    // return the array
+    res.status(200).json({
+        users:users
+    })
+})
+
+router.get('/owners_operators', authenticateToken, async (req, res, next)=>{
+    //call our function defined above to get users data which returns an array
+    const users = await getUsersOfRole('owners_operators', res, req);
+
+    // return the array
+    res.status(200).json({
+        users:users
+    })
+})
+
+router.get('/company_drivers', authenticateToken, async (req, res, next)=>{
+    //call our function defined above to get users data which returns an array
+    const users = await getUsersOfRole('company_drivers', res, req);
+
+    // return the array
+    res.status(200).json({
+        users:users
+    })
+})
+
+router.get('/dispatchers', authenticateToken, async (req, res, next)=>{
+    //call our function defined above to get users data which returns an array
+    const users = await getUsersOfRole('dispatchers', res, req);
+
+    // return the array
+    res.status(200).json({
+        users:users
+    })
+})
+
+router.get('/accountants', authenticateToken, async (req, res, next)=>{
+    //call our function defined above to get users data which returns an array
+    const users = await getUsersOfRole('accountants', res, req);
 
     // return the array
     res.status(200).json({
@@ -97,7 +147,7 @@ router.get('/users', authenticateToken, async (req, res, next)=>{
 */
 router.post('/register',authenticateToken, (req, res, next)=>{
     // make sure that the role that is given in the request is valid
-    const roles = ["admins", "drivers", "accountants", "dispatchers"]
+    const roles = ["admins", "company_drivers", "owners_operators", "accountants", "dispatchers"]
     
     // if it is a valid array continue
     if(roles.indexOf(req.body.role) != -1){
