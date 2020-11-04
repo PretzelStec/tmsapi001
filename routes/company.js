@@ -40,28 +40,30 @@ router.get('/', authenticateToken, (req, res, next)=>{
 async function getUsersOfRole(list, res){
     // define a new empty array
     const dispatchers = []
+    if(list){
     //for each of the ids in the array
-    for(i=0; i < list.length; i++){
-        //query the user information
-        await User.findById(list[i], (err, user)=>{
-            if(err){
-                res.status(500).json({
-                    status: "failed",
-                    error:err
-                })
-            }else if(!user){
-                // if the id is no longer associated with an account push this
-                dispatchers.push({error: "user no longer exists"})
-            }else{
-                // the id is valid push the email and phone
-                dispatchers.push({
-                    fname: user.fname,
-                    lname: user.lname,
-                    email: user.email,
-                    phone: user.phone
-                });
-            }
-        })
+        for(i=0; i < list.length; i++){
+            //query the user information
+            await User.findById(list[i], (err, user)=>{
+                if(err){
+                    res.status(500).json({
+                        status: "failed",
+                        error:err
+                    })
+                }else if(!user){
+                    // if the id is no longer associated with an account push this
+                    dispatchers.push({error: "user no longer exists"})
+                }else{
+                    // the id is valid push the email and phone
+                    dispatchers.push({
+                        fname: user.fname,
+                        lname: user.lname,
+                        email: user.email,
+                        phone: user.phone
+                    });
+                }
+            })
+        }
     }
     //return the array
     return dispatchers;
