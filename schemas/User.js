@@ -41,6 +41,18 @@ const User = mongoose.Schema({
     },
     phone:{
         type: String
+    },
+    city:{
+        required: true,
+        type: String,
+    },
+    state:{
+        required: true,
+        type: String,
+    },
+    zip:{
+        required: true,
+        type: Number,
     }
 });
 

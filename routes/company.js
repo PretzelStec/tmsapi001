@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 // require the authenticator
 const authenticateToken = require('../authenticator');
+const utility = require('../utility'); 
 
 // instantiate the router
 const router = express.Router();
@@ -27,63 +28,10 @@ router.get('/', authenticateToken, (req, res, next)=>{
     })
 })
 
-/*
-{
-    "users": [
-         "",
-         "",
-         ...
-     ]
-}
-*/
-
-async function getUsersOfRole(role, res, req){
-    // define a new empty array
-    const users = []
-    // get company data
-
-    await Company.findOne({MC : req.user.companyID})
-    .exec()
-    .then(async company => {
-        if(company){
-            const usersID = company[role];
-            for(x of usersID){
-                await User.findById(x)
-                .exec()
-                .then(user => {
-                    const data = {
-                        _id : user._id,
-                        email : user.email,
-                        fname : user.fname,
-                        lname : user.lname,
-                        phone : user.phone
-                    }
-                    users.push(data)
-                })
-                .catch(err => {
-                    users.push({
-                        error : "error getting user info"   
-                    })
-                })
-            }
-        }
-    })
-    .catch(err => {
-        return res.status(200).json({
-            status : "failed",
-            error: err
-        })
-    });
-    
-
-    //return the array
-    return users;
-}
-
 // get the user of a given list from the request
 router.get('/admins', authenticateToken, async (req, res, next)=>{
     //call our function defined above to get users data which returns an array
-    const users = await getUsersOfRole('admins', res, req);
+    const users = await utility.getUsersOfRole('admins', res, req);
 
     // return the array
     res.status(200).json({
@@ -93,7 +41,7 @@ router.get('/admins', authenticateToken, async (req, res, next)=>{
 
 router.get('/owners_operators', authenticateToken, async (req, res, next)=>{
     //call our function defined above to get users data which returns an array
-    const users = await getUsersOfRole('owners_operators', res, req);
+    const users = await utility.getUsersOfRole('owners_operators', res, req);
 
     // return the array
     res.status(200).json({
@@ -103,7 +51,7 @@ router.get('/owners_operators', authenticateToken, async (req, res, next)=>{
 
 router.get('/company_drivers', authenticateToken, async (req, res, next)=>{
     //call our function defined above to get users data which returns an array
-    const users = await getUsersOfRole('company_drivers', res, req);
+    const users = await utility.getUsersOfRole('company_drivers', res, req);
 
     // return the array
     res.status(200).json({
@@ -113,7 +61,7 @@ router.get('/company_drivers', authenticateToken, async (req, res, next)=>{
 
 router.get('/dispatchers', authenticateToken, async (req, res, next)=>{
     //call our function defined above to get users data which returns an array
-    const users = await getUsersOfRole('dispatchers', res, req);
+    const users = await utility.getUsersOfRole('dispatchers', res, req);
 
     // return the array
     res.status(200).json({
@@ -123,7 +71,7 @@ router.get('/dispatchers', authenticateToken, async (req, res, next)=>{
 
 router.get('/accountants', authenticateToken, async (req, res, next)=>{
     //call our function defined above to get users data which returns an array
-    const users = await getUsersOfRole('accountants', res, req);
+    const users = await utility.getUsersOfRole('accountants', res, req);
 
     // return the array
     res.status(200).json({
@@ -140,7 +88,10 @@ router.get('/accountants', authenticateToken, async (req, res, next)=>{
     "lname":"",
     "phone":"",
     "email":"",
-    "password":""
+    "password":"",
+    "city":"",
+    "state":"",
+    "zip":"",
     "role": <"admins", "drivers", "accountants", "dispatchers">
 }
 
@@ -185,6 +136,9 @@ router.post('/register',authenticateToken, (req, res, next)=>{
                                 // user who created them
                                 companyID: req.user.companyID,
                                 role: req.body.role,
+                                city: req.body.city,
+                                state: req.body.state,
+                                zip: req.body.zip,
                                 phone: req.body.phone
                             })
                             newUser
@@ -227,6 +181,219 @@ router.post('/register',authenticateToken, (req, res, next)=>{
             error: "not proper role"
         })
     }
+})
+
+const Truck = require('../models/Truck');
+const Trailer = require('../models/Trailer');
+
+// Routes to get trucks and trailers stored in the database.
+
+//GET ALL
+router.get('/trucks', authenticateToken, (req, res, next)=>{
+    Truck.find({MC : req.user.companyID})
+    .exec()
+    .then(trucks => {
+        res.status(200).json({
+            status: "success",
+            trucks : trucks
+        })
+    })
+    .catch(err => {
+        res.status(401).json({
+            status: "failed"
+        })
+    })
+})
+
+router.get('/trailers', authenticateToken,(req, res, next)=>{
+    Trailer.find({MC : req.user.companyID})
+    .exec()
+    .then(trailers => {
+        res.status(200).json({
+            status: "success",
+            trailers : trailers
+        })
+    })
+    .catch(err => {
+        res.status(401).json({
+            status: "failed"
+        })
+    })
+})
+
+// GET BY LP
+router.get('/trucks/:lp',authenticateToken, (req, res, next)=>{
+    Truck.findOne({plate : req.params.lp})
+    .exec()
+    .then(truck => {
+        if(truck){
+            res.status(200).json({
+                status: "success",
+                truck : truck
+            })
+        }else{
+            res.status(404).json({
+                status: "failed",
+                message: "no truck with that license plate number"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(401).json({
+            status: "failed"
+        })
+    })
+})
+
+router.get('/trailers/:lp',authenticateToken, (req, res, next)=>{
+    Trailer.findOne({plate : req.params.lp})
+    .exec()
+    .then(trailer => {
+        if(trailer){
+            res.status(200).json({
+                status: "success",
+                trailer : trailer
+            })
+        }else{
+            res.status(404).json({
+                status: "failed",
+                message: "no trailer with that license plate number"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(401).json({
+            status: "failed"
+        })
+    })
+})
+
+
+// Routes to post new trucks and trailers
+
+router.post('/trucks', authenticateToken,(req, res, next)=> {
+    Truck.findOne({plate : req.body.plate})
+    .exec()
+    .then(truck => {
+        if(truck){
+            res.status(401).json({
+                status: "failed",
+                message: "a truck with that license plate already exists"
+            })
+        }else{
+            const newTruck = Truck({
+                 // General Info
+                unit: req.body.unit,
+                type: req.body.type,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+                status: req.body.status,
+                division: req.body.division,
+
+                // Truck Info
+                plate : req.body.plate,
+                state: req.body.state,
+                model : req.body.model,
+                year: req.body.year,
+                color: req.body.color,
+                mileage: req.body.mileage,
+                make : req.body.make,
+                fuelcard : req.body.fuelcard,
+                fueltype : req.body.fueltype,
+                ipass: req.body.ipass,
+                vin : req.body.vin,
+
+                // User Info
+                fname : req.body.fname,
+                lname : req.body.lname,
+                MC : req.body.MC,
+                ownerCity : req.body.ownerCity,
+                ownerState: req.body.ownerState,
+                ownerZip : req.body.ownerZip
+            });
+            newTruck
+            .save()
+            .then(doc => {
+                res.status(201).json({
+                    status: "success",
+                    message: "successfully created new truck"
+                })
+            })
+            .catch(err => {
+                res.status(401).json({
+                    status: "failed",
+                    error : err
+                })
+            })
+        }
+    })
+    .catch(err => {
+        res.status(404).json({
+            status: "failed",
+            error : err
+        })
+    })
+})
+
+router.post('/trailers', authenticateToken,(req, res, next) => {
+    Trailer.findOne({plate : req.body.plate})
+    .exec()
+    .then(trailer => {
+        if(trailer){
+            res.status(401).json({
+                status: "failed",
+                message: "a Trailer with that license plate already exists"
+            })
+        }else{
+            const newTrailer = Trailer({
+                 // General Info
+                unit: req.body.unit,
+                type: req.body.type,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+                status: req.body.status,
+                division: req.body.division,
+
+                // Trailer Info
+                plate : req.body.plate,
+                state: req.body.state,
+                model : req.body.model,
+                year: req.body.year,
+                color: req.body.color,
+                mileage: req.body.mileage,
+                make : req.body.make,
+                vin : req.body.vin,
+
+                // User Info
+                fname : req.body.fname,
+                lname : req.body.lname,
+                MC : req.body.MC,
+                ownerCity : req.body.ownerCity,
+                ownerState: req.body.ownerState,
+                ownerZip : req.body.ownerZip
+            });
+            newTrailer
+            .save()
+            .then(doc => {
+                res.status(201).json({
+                    status: "success",
+                    message: "successfully created new Trailer"
+                })
+            })
+            .catch(err => {
+                res.status(401).json({
+                    status: "failed",
+                    error : err
+                })
+            })
+        }
+    })
+    .catch(err => {
+        res.status(404).json({
+            status: "failed",
+            error : err
+        })
+    })
 })
 
 

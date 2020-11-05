@@ -79,7 +79,10 @@ router.post('/login', (req, res, next)=>{
     "lname":"",
     "phone":"",
     "email":"",
-    "password":""
+    "password":"",
+    "city":"",
+    "state":"",
+    "zip":"",
 },
 "company": {
     "MC":"",
@@ -135,6 +138,9 @@ router.post('/register', async (req, res, next)=>{
                 password: hash,
                 companyID: req.body.company.MC,
                 role: "admins",
+                city: req.body.user.city,
+                state: req.body.user.state,
+                zip : req.body.user.zip,
                 phone: req.body.user.phone
             })
             // create new company
