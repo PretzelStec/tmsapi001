@@ -276,7 +276,7 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
     .exec()
     .then(truck => {
         if(truck){
-            res.status(401).json({
+            res.status(409).json({
                 status: "failed",
                 message: "a truck with that license plate already exists"
             })
@@ -306,7 +306,7 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
                 // User Info
                 fname : req.body.fname,
                 lname : req.body.lname,
-                MC : req.body.MC,
+                MC : req.user.companyID,
                 ownerCity : req.body.ownerCity,
                 ownerState: req.body.ownerState,
                 ownerZip : req.body.ownerZip
@@ -320,7 +320,7 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
                 })
             })
             .catch(err => {
-                res.status(401).json({
+                res.status(400).json({
                     status: "failed",
                     error : err
                 })
@@ -328,7 +328,7 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
         }
     })
     .catch(err => {
-        res.status(404).json({
+        res.status(400).json({
             status: "failed",
             error : err
         })
@@ -336,64 +336,71 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
 })
 
 router.post('/trailers', authenticateToken,(req, res, next) => {
-    Trailer.findOne({plate : req.body.plate})
-    .exec()
-    .then(trailer => {
-        if(trailer){
-            res.status(401).json({
-                status: "failed",
-                message: "a Trailer with that license plate already exists"
-            })
-        }else{
-            const newTrailer = Trailer({
-                 // General Info
-                unit: req.body.unit,
-                type: req.body.type,
-                startDate: req.body.startDate,
-                endDate: req.body.endDate,
-                status: req.body.status,
-                division: req.body.division,
-
-                // Trailer Info
-                plate : req.body.plate,
-                state: req.body.state,
-                model : req.body.model,
-                year: req.body.year,
-                color: req.body.color,
-                mileage: req.body.mileage,
-                make : req.body.make,
-                vin : req.body.vin,
-
-                // User Info
-                fname : req.body.fname,
-                lname : req.body.lname,
-                MC : req.body.MC,
-                ownerCity : req.body.ownerCity,
-                ownerState: req.body.ownerState,
-                ownerZip : req.body.ownerZip
-            });
-            newTrailer
-            .save()
-            .then(doc => {
-                res.status(201).json({
-                    status: "success",
-                    message: "successfully created new Trailer"
-                })
-            })
-            .catch(err => {
-                res.status(401).json({
+    if(req.body.plates){
+        Trailer.findOne({plate : req.body.plate})
+        .exec()
+        .then(trailer => {
+            if(trailer){
+                res.status(409).json({
                     status: "failed",
-                    error : err
+                    message: "a Trailer with that license plate already exists"
                 })
-            })
-        }
-    })
-    .catch(err => {
-        res.status(404).json({
-            status: "failed",
-            error : err
+            }else{
+                const newTrailer = Trailer({
+                    // General Info
+                    unit: req.body.unit,
+                    type: req.body.type,
+                    startDate: req.body.startDate,
+                    endDate: req.body.endDate,
+                    status: req.body.status,
+                    division: req.body.division,
+
+                    // Trailer Info
+                    plate : req.body.plate,
+                    state: req.body.state,
+                    model : req.body.model,
+                    year: req.body.year,
+                    color: req.body.color,
+                    mileage: req.body.mileage,
+                    make : req.body.make,
+                    vin : req.body.vin,
+
+                    // User Info
+                    fname : req.body.fname,
+                    lname : req.body.lname,
+                    MC : req.user.companyID,
+                    ownerCity : req.body.ownerCity,
+                    ownerState: req.body.ownerState,
+                    ownerZip : req.body.ownerZip
+                });
+                newTrailer
+                .save()
+                .then(doc => {
+                    res.status(201).json({
+                        status: "success",
+                        message: "successfully created new Trailer"
+                    })
+                })
+                .catch(err => {
+                    res.status(400).json({
+                        status: "failed",
+                        error : err
+                    })
+                })
+            }
         })
-    })
+        .catch(err => {
+            res.status(400).json({
+                status: "failed",
+                error : err
+            })
+        })
+    }else{
+        res.status(400).json({
+            status: "failed",
+            error : "improper body"
+        })
+    }
 })
 
 

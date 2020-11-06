@@ -5,7 +5,10 @@ const User = require('../schemas/User');
 const Truck = mongoose.Schema({
 
     // General Info
-    unit: String,
+    unit: {
+        type : String,
+        required: true
+    },
     type: String,
     startDate: {
         type: Date,
@@ -16,25 +19,70 @@ const Truck = mongoose.Schema({
     division: String,
 
     // Truck Info
-    plate : String,
-    state: String,
-    model : String,
-    year: Number,
-    color: String,
-    mileage: Number,
-    make : String,
+    plate : {
+        type : String,
+        required: true
+    },
+    state: {
+        type : String,
+        required: true
+    },
+    model : {
+        type : String,
+        required: true
+    },
+    year: {
+        type:Number,
+        required: true
+    },
+    color: {
+        type : String,
+        required: true
+    },
+    mileage: {
+        type : Number,
+        required: true
+    },
+    make : {
+        type : String,
+        required: true
+    },
     fuelcard : String,
-    fueltype : String,
+    fueltype : {
+        type : String,
+        required: true
+    },
     ipass: String,
-    vin : String,
+    vin : {
+        type : String,
+        required: true
+    },
 
     // User Info
-    fname : String,
-    lname : String,
-    MC : String,
-    ownerCity : String,
-    ownerState: String,
-    ownerZip : String
+    fname : {
+        type : String,
+        required: true
+    },
+    lname : {
+        type : String,
+        required: true
+    },
+    MC : {
+        type : String,
+        required: true
+    },
+    ownerCity : {
+        type : String,
+        required: true
+    },
+    ownerState: {
+        type : String,
+        required: true
+    },
+    ownerZip : {
+        type : String,
+        required: true
+    }
 
 })
 
