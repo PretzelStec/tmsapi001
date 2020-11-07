@@ -273,7 +273,7 @@ router.get('/trailers/:lp',authenticateToken, (req, res, next)=>{
 
 router.post('/trucks', authenticateToken,(req, res, next)=> {
     if(req.body.plates){
-        Truck.findOne({plate : req.body.plate})
+        Truck.findOne({Plate : req.body.Plate})
         .exec()
         .then(truck => {
             if(truck){
@@ -284,33 +284,33 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
             }else{
                 const newTruck = Truck({
                     // General Info
-                    unit: req.body.Unit,
-                    type: req.body.Type,
-                    startDate: req.body.StartDate,
-                    endDate: req.body.EndDate,
-                    status: req.body.Status,
-                    division: req.body.Division,
+                    Unit: req.body.Unit,
+                    Type: req.body.Type,
+                    StartDate: req.body.StartDate,
+                    EndDate: req.body.EndDate,
+                    Status: req.body.Status,
+                    Division: req.body.Division,
 
                     // Truck Info
-                    plate : req.body.Plate,
-                    state: req.body.State,
-                    model : req.body.Model,
-                    year: req.body.Year,
-                    color: req.body.Color,
-                    mileage: req.body.Mileage,
-                    make : req.body.Make,
-                    fuelcard : req.body.Fuelcard,
-                    fueltype : req.body.Fueltype,
-                    ipass: req.body.Ipass,
-                    vin : req.body.Vin,
+                    Plate : req.body.Plate,
+                    State: req.body.State,
+                    Model : req.body.Model,
+                    Year: req.body.Year,
+                    Color: req.body.Color,
+                    Mileage: req.body.Mileage,
+                    Make : req.body.Make,
+                    Fuelcard : req.body.Fuelcard,
+                    Fueltype : req.body.Fueltype,
+                    Ipass: req.body.Ipass,
+                    Vin : req.body.Vin,
 
                     // User Info
-                    fname : req.body.Fname,
-                    lname : req.body.Lname,
+                    Fname : req.body.Fname,
+                    Lname : req.body.Lname,
                     MC : req.user.companyID,
-                    ownerCity : req.body.OwnerCity,
-                    ownerState: req.body.OwnerState,
-                    ownerZip : req.body.OwnerZip
+                    OwnerCity : req.body.OwnerCity,
+                    OwnerState: req.body.OwnerState,
+                    OwnerZip : req.body.OwnerZip
                 });
                 newTruck
                 .save()
@@ -344,7 +344,7 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
 
 router.post('/trailers', authenticateToken,(req, res, next) => {
     if(req.body.plates){
-        Trailer.findOne({plate : req.body.plate})
+        Trailer.findOne({Plate : req.body.Plate})
         .exec()
         .then(trailer => {
             if(trailer){
@@ -355,30 +355,30 @@ router.post('/trailers', authenticateToken,(req, res, next) => {
             }else{
                 const newTrailer = Trailer({
                     // General Info
-                    unit: req.body.unit,
-                    type: req.body.type,
-                    startDate: req.body.startDate,
-                    endDate: req.body.endDate,
-                    status: req.body.status,
-                    division: req.body.division,
+                    Unit: req.body.Unit,
+                    Type: req.body.Type,
+                    StartDate: req.body.StartDate,
+                    EndDate: req.body.EndDate,
+                    Status: req.body.Status,
+                    Division: req.body.Division,
 
-                    // Trailer Info
-                    plate : req.body.plate,
-                    state: req.body.state,
-                    model : req.body.model,
-                    year: req.body.year,
-                    color: req.body.color,
-                    mileage: req.body.mileage,
-                    make : req.body.make,
-                    vin : req.body.vin,
+                    // Truck Info
+                    Plate : req.body.Plate,
+                    State: req.body.State,
+                    Model : req.body.Model,
+                    Year: req.body.Year,
+                    Color: req.body.Color,
+                    Mileage: req.body.Mileage,
+                    Make : req.body.Make,
+                    Vin : req.body.Vin,
 
                     // User Info
-                    fname : req.body.fname,
-                    lname : req.body.lname,
+                    Fname : req.body.Fname,
+                    Lname : req.body.Lname,
                     MC : req.user.companyID,
-                    ownerCity : req.body.ownerCity,
-                    ownerState: req.body.ownerState,
-                    ownerZip : req.body.ownerZip
+                    OwnerCity : req.body.OwnerCity,
+                    OwnerState: req.body.OwnerState,
+                    OwnerZip : req.body.OwnerZip
                 });
                 newTrailer
                 .save()

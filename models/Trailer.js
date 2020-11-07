@@ -5,59 +5,59 @@ const User = require('../schemas/User');
 const Trailer = mongoose.Schema({
 
     // General Info
-    unit: {
+    Unit: {
         type : String,
         required: true
     },
-    type: String,
-    startDate: {
+    Type: String,
+    StartDate: {
         type: Date,
         default: Date.now
     },
-    endDate: Date,
-    status: String,
-    division: String,
+    EndDate: Date,
+    Status: String,
+    Division: String,
 
     // Truck Info
-    plate : {
+    Plate : {
         type : String,
         required: true
     },
-    state: {
+    State: {
         type : String,
         required: true
     },
-    model : {
+    Model : {
         type : String,
         required: true
     },
-    year: {
+    Year: {
         type:Number,
         required: true
     },
-    color: {
+    Color: {
         type : String,
         required: true
     },
-    mileage: {
+    Mileage: {
         type : Number,
         required: true
     },
-    make : {
+    Make : {
         type : String,
         required: true
     },
-    vin : {
+    Vin : {
         type : String,
         required: true
     },
 
     // User Info
-    fname : {
+    Fname : {
         type : String,
         required: true
     },
-    lname : {
+    Lname : {
         type : String,
         required: true
     },
@@ -65,15 +65,15 @@ const Trailer = mongoose.Schema({
         type : String,
         required: true
     },
-    ownerCity : {
+    OwnerCity : {
         type : String,
         required: true
     },
-    ownerState: {
+    OwnerState: {
         type : String,
         required: true
     },
-    ownerZip : {
+    OwnerZip : {
         type : String,
         required: true
     }
