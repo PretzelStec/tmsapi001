@@ -272,67 +272,74 @@ router.get('/trailers/:lp',authenticateToken, (req, res, next)=>{
 // Routes to post new trucks and trailers
 
 router.post('/trucks', authenticateToken,(req, res, next)=> {
-    Truck.findOne({plate : req.body.plate})
-    .exec()
-    .then(truck => {
-        if(truck){
-            res.status(409).json({
-                status: "failed",
-                message: "a truck with that license plate already exists"
-            })
-        }else{
-            const newTruck = Truck({
-                 // General Info
-                unit: req.body.unit,
-                type: req.body.type,
-                startDate: req.body.startDate,
-                endDate: req.body.endDate,
-                status: req.body.status,
-                division: req.body.division,
-
-                // Truck Info
-                plate : req.body.plate,
-                state: req.body.state,
-                model : req.body.model,
-                year: req.body.year,
-                color: req.body.color,
-                mileage: req.body.mileage,
-                make : req.body.make,
-                fuelcard : req.body.fuelcard,
-                fueltype : req.body.fueltype,
-                ipass: req.body.ipass,
-                vin : req.body.vin,
-
-                // User Info
-                fname : req.body.fname,
-                lname : req.body.lname,
-                MC : req.user.companyID,
-                ownerCity : req.body.ownerCity,
-                ownerState: req.body.ownerState,
-                ownerZip : req.body.ownerZip
-            });
-            newTruck
-            .save()
-            .then(doc => {
-                res.status(201).json({
-                    status: "success",
-                    message: "successfully created new truck"
-                })
-            })
-            .catch(err => {
-                res.status(400).json({
+    if(req.body.plates){
+        Truck.findOne({plate : req.body.plate})
+        .exec()
+        .then(truck => {
+            if(truck){
+                res.status(409).json({
                     status: "failed",
-                    error : err
+                    message: "a truck with that license plate already exists"
                 })
+            }else{
+                const newTruck = Truck({
+                    // General Info
+                    unit: req.body.unit,
+                    type: req.body.type,
+                    startDate: req.body.startDate,
+                    endDate: req.body.endDate,
+                    status: req.body.status,
+                    division: req.body.division,
+
+                    // Truck Info
+                    plate : req.body.plate,
+                    state: req.body.state,
+                    model : req.body.model,
+                    year: req.body.year,
+                    color: req.body.color,
+                    mileage: req.body.mileage,
+                    make : req.body.make,
+                    fuelcard : req.body.fuelcard,
+                    fueltype : req.body.fueltype,
+                    ipass: req.body.ipass,
+                    vin : req.body.vin,
+
+                    // User Info
+                    fname : req.body.fname,
+                    lname : req.body.lname,
+                    MC : req.user.companyID,
+                    ownerCity : req.body.ownerCity,
+                    ownerState: req.body.ownerState,
+                    ownerZip : req.body.ownerZip
+                });
+                newTruck
+                .save()
+                .then(doc => {
+                    res.status(201).json({
+                        status: "success",
+                        message: "successfully created new truck"
+                    })
+                })
+                .catch(err => {
+                    res.status(400).json({
+                        status: "failed",
+                        error : err
+                    })
+                })
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                status: "failed",
+                error : err
             })
-        }
-    })
-    .catch(err => {
+        })
+    }else{
         res.status(400).json({
             status: "failed",
-            error : err
+            error : "improper body"
         })
-    })
+    }
 })
 
 router.post('/trailers', authenticateToken,(req, res, next) => {
