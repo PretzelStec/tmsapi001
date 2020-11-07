@@ -272,7 +272,7 @@ router.get('/trailers/:lp',authenticateToken, (req, res, next)=>{
 // Routes to post new trucks and trailers
 
 router.post('/trucks', authenticateToken,(req, res, next)=> {
-    if(req.body.plates){
+    if(req.body.Plate){
         Truck.findOne({Plate : req.body.Plate})
         .exec()
         .then(truck => {
@@ -343,7 +343,7 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
 })
 
 router.post('/trailers', authenticateToken,(req, res, next) => {
-    if(req.body.plates){
+    if(req.body.Plate){
         Trailer.findOne({Plate : req.body.Plate})
         .exec()
         .then(trailer => {
