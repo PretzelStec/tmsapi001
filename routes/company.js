@@ -284,33 +284,33 @@ router.post('/trucks', authenticateToken,(req, res, next)=> {
             }else{
                 const newTruck = Truck({
                     // General Info
-                    unit: req.body.unit,
-                    type: req.body.type,
-                    startDate: req.body.startDate,
-                    endDate: req.body.endDate,
-                    status: req.body.status,
-                    division: req.body.division,
+                    unit: req.body.Unit,
+                    type: req.body.Type,
+                    startDate: req.body.StartDate,
+                    endDate: req.body.EndDate,
+                    status: req.body.Status,
+                    division: req.body.Division,
 
                     // Truck Info
-                    plate : req.body.plate,
-                    state: req.body.state,
-                    model : req.body.model,
-                    year: req.body.year,
-                    color: req.body.color,
-                    mileage: req.body.mileage,
-                    make : req.body.make,
-                    fuelcard : req.body.fuelcard,
-                    fueltype : req.body.fueltype,
-                    ipass: req.body.ipass,
-                    vin : req.body.vin,
+                    plate : req.body.Plate,
+                    state: req.body.State,
+                    model : req.body.Model,
+                    year: req.body.Year,
+                    color: req.body.Color,
+                    mileage: req.body.Mileage,
+                    make : req.body.Make,
+                    fuelcard : req.body.Fuelcard,
+                    fueltype : req.body.Fueltype,
+                    ipass: req.body.Ipass,
+                    vin : req.body.Vin,
 
                     // User Info
-                    fname : req.body.fname,
-                    lname : req.body.lname,
+                    fname : req.body.Fname,
+                    lname : req.body.Lname,
                     MC : req.user.companyID,
-                    ownerCity : req.body.ownerCity,
-                    ownerState: req.body.ownerState,
-                    ownerZip : req.body.ownerZip
+                    ownerCity : req.body.OwnerCity,
+                    ownerState: req.body.OwnerState,
+                    ownerZip : req.body.OwnerZip
                 });
                 newTruck
                 .save()
