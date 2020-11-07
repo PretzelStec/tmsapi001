@@ -39,10 +39,6 @@ const Trailer = mongoose.Schema({
         type : String,
         required: true
     },
-    Mileage: {
-        type : Number,
-        required: true
-    },
     Make : {
         type : String,
         required: true
