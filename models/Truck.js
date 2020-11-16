@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const User = require('../schemas/User');
-
 const Truck = mongoose.Schema({
 
     // General Info

@@ -368,7 +368,6 @@ router.post('/trailers', authenticateToken,(req, res, next) => {
                     Model : req.body.Model,
                     Year: req.body.Year,
                     Color: req.body.Color,
-                    Mileage: req.body.Mileage,
                     Make : req.body.Make,
                     Vin : req.body.Vin,
 

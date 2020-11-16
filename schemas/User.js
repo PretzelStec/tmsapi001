@@ -43,16 +43,13 @@ const User = mongoose.Schema({
         type: String
     },
     city:{
-        required: true,
         type: String,
     },
     state:{
-        required: true,
         type: String,
     },
     zip:{
-        required: true,
-        type: Number,
+        type: Number
     }
 });
 
