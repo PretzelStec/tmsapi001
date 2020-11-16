@@ -9,6 +9,7 @@ const app = express();
 const userRoutes = require('./routes/user');
 const companyRoutes = require('./routes/company');
 const loadRoutes = require("./routes/load");
+const customerRoutes = require('./routes/customer');
 
 // Connect to database
 mongoose.connect(
@@ -50,6 +51,7 @@ app.get('/', (req, res, next) => {
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
 app.use('/load', loadRoutes);
+app.use('/customers', customerRoutes);
 
 app.post('/debug', (req, res, nexy)=> {
     res.status(200).json(req.body)

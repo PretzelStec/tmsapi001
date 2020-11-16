@@ -15,6 +15,12 @@ require('mongoose-type-email')
 
 const User = mongoose.Schema({
     _id : mongoose.Schema.Types.ObjectId,
+    image:{
+        type: String
+    },
+    imagePath:{
+        type:String
+    },
     fname: {
         type: String,
         required: true

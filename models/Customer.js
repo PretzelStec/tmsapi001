@@ -33,6 +33,8 @@ const Customer = mongoose.Schema({
     physicalState: stringReqType,
     physicalZip: stringReqType,
 
+    postedByMC: stringReqType,
+
     comments: String
 })
 
