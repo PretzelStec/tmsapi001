@@ -11,7 +11,7 @@ const Load = new mongoose.Schema({
     commodity: String, // required
     weight: Number, // required
     rate: Number, // required
-    //truck: {type: mongoose.Schema.ObjectId, ref: 'truck'}, //
+    truck: {type: mongoose.Schema.ObjectId, ref: 'truck'},
     status: String, // ["upcoming", "current", "previous"]
     bol: String,
     bolPath: String,

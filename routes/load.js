@@ -46,7 +46,7 @@ router.post('/', authenticateToken, (req, res, next) => {
         commodity: req.body.commodity, // required
         weight: req.body.weight, // required
         rate: req.body.rate, // required
-        //truck: {type: mongoose.Schema.ObjectId, ref: 'truck'}, // required
+        truck: req.body.truck, // required
         status: req.body.status, // ["upcoming", "current", "previous"]
         bol: req.body.bol,
         bolPath: req.body.bolPath,
@@ -113,10 +113,38 @@ router.post('/', authenticateToken, (req, res, next) => {
 
 })
 
+// edit a load given the id in the parameters
+router.patch('/:id', authenticateToken, (req, res, next) => {
+    Load.findByIdAndUpdate(req.params.id, req.body)
+    .exec()
+    .then(load => {
+        return res.status(201).json({
+            status:"success",
+            message:"successfully updated load",
+        })
+    })
+    .catch(err => {
+        return res.status(400).json({
+            status:"failed",
+            error:err
+        })
+    })
+})
 
-router.patch('/edit/driver', authenticateToken, (req, res, next) => {
-    res.status(200).json({
-        message : "driver edited"
+router.delete("/:id", (req, res, next) => {
+    Load.findByIdAndDelete(req.params.id)
+    .exec()
+    .then(load => {
+        res.status(202).json({
+            status: "success",
+            message: "successfully deleted load"
+        })
+    })
+    .catch(err => {
+        res.status(400).json({
+            status: "failed",
+            error: err
+        })
     })
 })
 

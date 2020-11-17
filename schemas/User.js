@@ -56,6 +56,10 @@ const User = mongoose.Schema({
     },
     zip:{
         type: Number
+    },
+    truck:{
+        type: mongoose.Schema.ObjectId,
+        ref:"truck"
     }
 });
 
