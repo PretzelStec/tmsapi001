@@ -55,7 +55,7 @@ const User = mongoose.Schema({
         type: String,
     },
     zip:{
-        type: Number
+        type: String
     },
     truck:{
         type: mongoose.Schema.ObjectId,

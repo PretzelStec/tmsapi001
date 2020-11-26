@@ -10,6 +10,8 @@ const userRoutes = require('./routes/user');
 const companyRoutes = require('./routes/company');
 const loadRoutes = require("./routes/load");
 const customerRoutes = require('./routes/customer');
+const truckRoutes = require('./routes/trucks');
+const trailerRoutes = require('./routes/trailers');
 
 // Connect to database
 mongoose.connect(
@@ -50,8 +52,10 @@ app.get('/', (req, res, next) => {
 
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
-app.use('/load', loadRoutes);
+app.use('/loads', loadRoutes);
 app.use('/customers', customerRoutes);
+app.use('/trucks', truckRoutes);
+app.use('/trailers', trailerRoutes);
 
 app.post('/debug', (req, res, nexy)=> {
     res.status(200).json(req.body)
