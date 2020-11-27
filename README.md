@@ -17,7 +17,10 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /accountants | [GET] |
 |  | /register | [POST] |
 |  | /user/[user id] | [DELETE] |
-| /trucks | Title |
+| /trucks | / | [GET] get all trucks |
+|  | / | [POST] add a new truck |
+|  | /[license plate number] | [GET] get truck details by license plate number |
+|  | /[license plate number] | [PATCH] not implemented yet |
 | /trailers | Text |
 | /loads | Title |
 | /customer | Text |
