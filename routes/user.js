@@ -16,6 +16,8 @@ router.get('/:id', userController.getUserDetails);
 
 router.patch('/edit/password', authenticateToken, userController.updatePassword);
 
+router.patch('/edit/truck', authenticateToken, userController.updateTruck)
+
 module.exports = router;
 
 /* 

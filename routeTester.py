@@ -9,7 +9,7 @@ def col(str):
     if str == 'failed':
         return ('\033[91m'+'failed'+'\033[0m')
     else:
-        return ('\033[92m'+'success'+'\033[0m')
+        return ('\033[92m'+'passed'+'\033[0m')
 
 def userPermTest(token, role):
     print('\033[4m'+'beginning of permission & data acquisition test with ' +role+ '\033[0m')
@@ -31,6 +31,16 @@ def userPermTest(token, role):
     print('selected load cust :\t' + loads[loadIndex]['customer'])
     print('selected load pickups :\t' + str(len(loads[loadIndex]['pickup'])))
     print('selected load drops :\t' + str(len(loads[loadIndex]['drop'])))
+    print('selected load status :\t' + loads[loadIndex]['status'])
+
+    #updateing load status
+    for i in range(4):
+        r = requests.patch(url=url+'/loads/bump/' + loads[loadIndex]['_id'], headers=headers)
+        print("bumb load status :\t" + col(r.json()['status']))
+
+    loads = requests.get(url=url+'/loads/', headers=headers).json()['loads']
+    print('updated load status :\t' + loads[loadIndex]['status'])
+
 
     dispatchdata = requests.get(url=url+'/user/' + loads[loadIndex]['dispatch']).json()['user']
     print('dispatch of load :\t' + dispatchdata['email'])
@@ -218,6 +228,66 @@ headers = {
     'authorization':'Bearer '+token
 }
 
+#add trucks
+for i in range(5):
+    submission = {
+        "Unit":"124_"+modifier+'_'+str(i),
+        "Plate":"124_"+modifier+'_'+str(i),
+        "State":"Illinois",
+        "Model":"HINO155",
+        "Year":"2020",
+        "Color":"white",
+        "Mileage":"21931",
+        "Make":"HINO",
+        "Fueltype":"diseal",
+        "Vin":"329173012739102",
+        "Fname":"jacob",
+        "Lname":"stec",
+        "OwnerCity":"chicago",
+        "OwnerState":"IL",
+        "OwnerZip": "60638"
+    }
+
+    r = requests.post(url = url+'/trucks/', headers=headers, json=submission)
+    print('Creating Truck : ', col(r.json()['status']))
+
+trucks = requests.get(url=url+'/trucks', headers=headers).json()['trucks']
+
+drivers = requests.get(url=url+"/company/drivers", headers=headers).json()['users']
+
+for x in range(len(drivers)):
+    submission = {
+        "email": drivers[x]['email'],
+        "password":"driver"
+    }
+    r = requests.post(url=url+'/user/login', json=submission)
+    print('loggin into driver : ', col(r.json()['status']))
+    token = r.json()['token']
+
+    headers = {
+        'authorization':'Bearer '+token
+    }
+
+    submission = {
+        "truckId":trucks[x]['_id']
+    }
+
+    r = requests.patch(url=url+'/user/edit/truck', headers=headers, json=submission)
+
+    print('update driver truck : ', col(r.json()['status']))
+
+submission = {
+    "email":'dispatcher'+modifier+'_1' +'@user.com',
+    "password":"dispatcher"
+}
+
+r = requests.post(url=url+loginRoute, json=submission)
+print('logging in as dispatcher :', col(r.json()['status']))
+token = r.json()['token']
+headers = {
+    'authorization':'Bearer '+token
+}
+
 import random
 for i in range(int(sys.argv[2])):
 
@@ -248,7 +318,6 @@ for i in range(int(sys.argv[2])):
         "commodity": "water",
         "weight": "123",
         "rate": "123", 
-        "status": "upcoming",
         "bol": "s",
         "bolPath": "s",
         "scale": "s",

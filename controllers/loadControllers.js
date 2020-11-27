@@ -40,7 +40,7 @@ exports.postLoad = (req, res, next) => {
         weight: req.body.weight, // required
         rate: req.body.rate, // required
         truck: req.body.truck, // required
-        status: req.body.status, // ["upcoming", "current", "previous"]
+        status: req.body.status || 'upcoming', // ["upcoming", "current", "previous"]
         bol: req.body.bol,
         bolPath: req.body.bolPath,
         scale: req.body.scale,
@@ -154,6 +154,45 @@ exports.getMyLoads = (req, res, next) => {
         res.status(400).json({
             status:"failed",
             error:err
+        })
+    })
+}
+
+exports.bumpLoadState = (req, res, next) => {
+    let states = ['upcoming', 'current', 'previous'];
+    Load.findById(req.params.id)
+    .exec()
+    .then(load => {
+        if(load){
+            if(load.companyID == req.user.companyID){
+                if(load.status != states[2]){
+                    load.status = states[states.indexOf(load.status)+1]
+                }
+                load.save()
+                .then(o => {
+                    res.status(200).json({
+                        status:"success",
+                        message:"successfully bumped up load status"
+                    })
+                })
+                .catch(err => {
+                    res.status(400).json({
+                        status: "failed",
+                        error:err
+                    })
+                })
+            }else{
+                res.status(401).json({
+                    status:"failed",
+                    message:"unauthorized to access this load functions."
+                })
+            }
+        }
+    })
+    .catch(err => {
+        res.status(400).json({
+            status:'failed',
+            error: err
         })
     })
 }

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('user', require('../schemas/User'));
 const Company = require('../models/Company');
+const Truck = require('../models/Truck');
 
 exports.getMyInfo = (req, res, next)=>{
     User.findById(req.user.userID)
@@ -259,5 +260,58 @@ exports.getUserDetails = (req, res, next) =>{
                 message:"user doesnt exist."
             })
         }
+    })
+}
+
+exports.updateTruck = (req, res, next) => {
+    User.findById(req.user.userID)
+    .exec()
+    .then(user => {
+        if(user){
+            Truck.findById(req.body.truckId)
+            .exec()
+            .then(truck => {
+                if(truck){
+                    user.truck = truck._id
+                    user
+                    .save()
+                    .then(u => {
+                        res.status(200).json({
+                            status:"success",
+                            message:"successfully update user truck"
+                        })
+                    })
+                    .catch(err => {
+                        res.status(400).json({
+                            status:"failed",
+                            error:err
+                        })
+                    })
+                }else{
+                    res.status(404).json({
+                        status:"failed",
+                        message:"truck does not exist"
+                    })
+                }
+            })
+            .catch(err => {
+                res.status(400).json({
+                    status:"failed",
+                    error:err
+                })
+            })
+            
+        }else{
+            res.status(404).json({
+                status:"failed",
+                message:"user does not exist"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(400).json({
+            status:"failed",
+            error:err
+        })
     })
 }

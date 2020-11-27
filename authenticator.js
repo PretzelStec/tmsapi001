@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const perms = {"admins":["GET", "POST", "DELETE", "PATCH"], "owners_operators":["GET", "PATCH"], "company_drivers":["GET", "PATCH"], "accountants":["GET"], "dispatchers":["GET", "POST", "DELETE", "PATCH"]}
+const perms = {"admins":["GET", "POST", "DELETE", "PATCH"], "owners_operators":["GET", "PATCH"], "company_drivers":["GET", "PATCH"], "accountants":["GET", "PATCH"], "dispatchers":["GET", "POST", "DELETE", "PATCH"]}
 
 function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
@@ -18,9 +18,6 @@ function authenticateToken(req, res, next){
             message : "not authorized"
         })
         req.user = user
-        // console.log(req.method)
-        // console.log(perms[req.user.role])
-        // console.log(perms[req.user.role].includes(req.method))
         if( perms[req.user.role].includes(req.method)){
             next()
         }else{
