@@ -37,3 +37,39 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[company id] | [GET] get company details by id |
 |  | /[company id] | [PATCH] edit details of a company |
 |  | /[company id] | [DELETE] delete a company |
+
+## Templates
+# Register User + Company
+Users : {
+  "user": {
+      "fname":"user",
+      "lname":"user",
+      "phone":"11111111111",
+      "email":"user@user.com",
+      "password":"user",
+      "city":"city",
+      "state":"state",
+      "zip":"100"
+  },
+  "company": {
+      "MC":"1234567",
+      "name":"company",
+      "state":"state",
+      "city":"city",
+      "street":"street",
+      "street2":"",
+      "zipCode":60606,
+      "officePhone":"111111111111" 
+  }
+}
+# Register User for Company
+{
+  "fname":"user",
+  "lname":"user",
+  "phone":"11111111111",
+  "email":"user@user.com",
+  "password":"user",
+  "city":"city",
+  "state":"state",
+  "zip":"100"
+}
