@@ -67,13 +67,40 @@ Users : {
 ## Register User for Company
 ```json
 {
-  "fname":"user",
-  "lname":"user",
-  "phone":"11111111111",
-  "email":"user@user.com",
-  "password":"user",
-  "city":"city",
-  "state":"state",
-  "zip":"100"
+  "fname":"",
+  "lname":"",
+  "phone":"",
+  "email":"",
+  "password":"",
+  "city":"",
+  "state":"",
+  "zip":""
+}
+```
+## Truck and Trailer
+### For trailer, remove fueltype, fuelcard, ipass, and mileage.
+```json
+{
+  "Unit":"",
+  "Type":"",
+  "Plate":"",
+  "EndDate":"",
+  "Status":"",
+  "Division:"",
+  "State":"",
+  "Model":"",
+  "Year":"",
+  "Color":"",
+  "Mileage":"",
+  "Make":"",
+  "Fueltype":"",
+  "Fuelcard":"",
+  "Ipass":"",
+  "Vin":"",
+  "Fname":"",
+  "Lname":"",
+  "OwnerCity":"",
+  "OwnerState":"",
+  "OwnerZip": ""
 }
 ```
