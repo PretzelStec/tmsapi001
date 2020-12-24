@@ -104,3 +104,47 @@ Users : {
   "OwnerZip": ""
 }
 ```
+## Load
+```json
+{
+  "customer": "",
+  "commodity": "",
+  "weight": "",
+  "rate": "", 
+  "bol": "",
+  "bolPath": "",
+  "scale": "",
+  "scalePath": "",
+  "lumper": "",
+  "lumberPath": "",
+  "inventory": "",
+  "inventoryPath": "",
+  "other1": "",
+  "other1Path": "",
+  "other2": "",
+  "other2Path": "",
+  "locationImage": "",
+  "pickup": [
+    {
+      "date":"",
+      "shipper":"",
+      "street": "",
+      "city":"",
+      "state":"",
+      "zip":""
+    }
+  ],
+  "drop": [
+    {
+      "date":"",
+      "reciever":"",
+      "street": "",
+      "city":"",
+      "state":"",
+      "zip":""
+    }
+  ],
+  "driver":"",
+  "notes": "These are the notes for the load"
+}
+```
