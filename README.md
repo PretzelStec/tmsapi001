@@ -40,6 +40,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 
 # Templates
 ## Register User + Company
+```json
 Users : {
   "user": {
       "fname":"user",
@@ -62,7 +63,9 @@ Users : {
       "officePhone":"111111111111" 
   }
 }
+```
 ## Register User for Company
+```json
 {
   "fname":"user",
   "lname":"user",
@@ -73,3 +76,4 @@ Users : {
   "state":"state",
   "zip":"100"
 }
+```
