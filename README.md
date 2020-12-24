@@ -1,4 +1,4 @@
-### TMS API
+# TMS API
 ## Description
 This API was built to be used to manage data such as loads with multiple pickups and drop offs, for trucking companies.
 ## Routes
@@ -38,8 +38,8 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[company id] | [PATCH] edit details of a company |
 |  | /[company id] | [DELETE] delete a company |
 
-## Templates
-# Register User + Company
+# Templates
+## Register User + Company
 Users : {
   "user": {
       "fname":"user",
@@ -62,7 +62,7 @@ Users : {
       "officePhone":"111111111111" 
   }
 }
-# Register User for Company
+## Register User for Company
 {
   "fname":"user",
   "lname":"user",
