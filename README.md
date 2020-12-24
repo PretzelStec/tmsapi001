@@ -38,7 +38,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[company id] | [PATCH] edit details of a company |
 |  | /[company id] | [DELETE] delete a company |
 
-# Templates
+# JSON Templates
 ## Register User + Company
 ```json
 Users : {
