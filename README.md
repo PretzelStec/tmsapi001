@@ -148,3 +148,10 @@ Users : {
   "notes": "These are the notes for the load"
 }
 ```
+## Login
+```json
+{
+  "email":"",
+  "password":""
+}
+```
