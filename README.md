@@ -32,7 +32,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[load id] | [GET] get a specific load |
 |  | /[load id] | [PATCH] edit a load |
 |  | /[load id] | [DELETE] delete a load |
-|  | /bump/[load id] | [PATCH] pump the status of a load (upcoming -> current -> previous) |
+|  | /bump/[load id] | [PATCH] bump the status of a load (upcoming -> current -> previous) |
 |  | /myloads | [GET] get all of the loads assigned to you as a driver |
 | /customer | / | [GET] get all customers |
 |  | / | [POST] add a new company |
