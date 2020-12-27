@@ -20,11 +20,13 @@ This API was built to be used to manage data such as loads with multiple pickups
 | /trucks | / | [GET] get all trucks |
 |  | / | [POST] add a new truck |
 |  | /[license plate number] | [GET] get truck details by license plate number |
-|  | /[truck id] | [PATCH] edit details of a truck |
+|  | /[license plate number] | [PATCH] edit details of a truck |
+|  | /[license plate number] | [DELETE] delete a truck |
 | /trailers | / | [GET] get all trailers |
 |  | / | [POST] add a new trailer |
 |  | /[license plate number] | [GET] get trailer details by license plate number |
-|  | /[truck id] | [PATCH] edit details of a trailer |
+|  | /[license plate number] | [PATCH] edit details of a trailer |
+|  | /[license plate number] | [DELETE] delete a trailer |
 | /loads | / | [GET] gets all loads associated with your company |
 |  | / | [POST] post a new load |
 |  | /[load id] | [GET] get a specific load |
