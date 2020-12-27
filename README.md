@@ -43,7 +43,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 # JSON Templates
 ## Register User + Company
 ```json
-Users : {
+{
   "user": {
       "fname":"user",
       "lname":"user",
