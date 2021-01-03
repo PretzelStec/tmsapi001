@@ -10,6 +10,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[user id] | [GET] get the info of a user given their ID. |
 |  | /edit/truck | [PATCH] used to edit the truck given a truck id in the request body. |
 |  | /edit/password | [PATCH] used to edit the password given new password and current password in the request body. |
+|  | /recover | [POST] Used to send a recovery link to specified email in body. |
 | /company | / | [GET] |
 |  | /admins | [GET] |
 |  | /drivers | [GET] |
