@@ -35,6 +35,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[load id] | [DELETE] delete a load |
 |  | /bump/[load id] | [PATCH] bump the status of a load (upcoming -> current -> previous) |
 |  | /myloads | [GET] get all of the loads assigned to you as a driver |
+|  | /[load id]/upload/<doc name> | [POST] uploads document and saves address to load. use form-data with key "demo_file". |
 | /customers | / | [GET] get all customers |
 |  | / | [POST] add a new company |
 |  | /[company id] | [GET] get company details by id |
