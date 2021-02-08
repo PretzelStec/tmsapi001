@@ -165,3 +165,18 @@ This API was built to be used to manage data such as loads with multiple pickups
   "password":""
 }
 ```
+
+## Locate
+```json
+{
+  "user":"",
+  "companyId":"",
+  "latitude":"",
+  "longitude":"",
+  "accuracy":"",
+  "altitudeAccuracy":"",
+  "altitude":"",
+  "speed":"",
+  "heading":""
+}
+```
