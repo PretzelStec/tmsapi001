@@ -11,6 +11,9 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /edit/truck | [PATCH] used to edit the truck given a truck id in the request body. |
 |  | /edit/password | [PATCH] used to edit the password given new password and current password in the request body. |
 |  | /recover | [POST] Used to send a recovery link to specified email in body. |
+|  | /upload/profile-image | [POST] used to upload a user image. key is 'file' |
+|  | /request-phone-login | [POST] send a code to phone attached to a user. use this code in \phone-login. code only lasts 5 min then expires. |
+|  | /phone-login | [POST] logs the user in an returns a token using the code sent to a phone number. |
 | /company | / | [GET] |
 |  | /admins | [GET] |
 |  | /drivers | [GET] |
@@ -35,7 +38,7 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[load id] | [DELETE] delete a load |
 |  | /bump/[load id] | [PATCH] bump the status of a load (upcoming -> current -> previous) |
 |  | /myloads | [GET] get all of the loads assigned to you as a driver |
-|  | /[load id]/upload/[doc name] | [POST] uploads document and saves address to load. use form-data with key "demo_file". |
+|  | /[load id]/upload/[doc name] | [POST] uploads document and saves address to load. use form-data with key "file". |
 | /customers | / | [GET] get all customers |
 |  | / | [POST] add a new company |
 |  | /[company id] | [GET] get company details by id |
