@@ -44,6 +44,9 @@ This API was built to be used to manage data such as loads with multiple pickups
 |  | /[company id] | [GET] get company details by id |
 |  | /[company id] | [PATCH] edit details of a company |
 |  | /[company id] | [DELETE] delete a company |
+| /locate | / | [POST] post/update location |
+|  | / | [GET] Get all locations associated with your company. |
+|  | /[User Id] | [GET] get location of a specific user. |
 
 # JSON Templates
 ## Register User + Company
